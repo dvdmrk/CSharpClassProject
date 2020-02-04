@@ -11,6 +11,6 @@ namespace src
         public string LastClassCompleted { get; set; }
         public DateTimeOffset LastClassCompletedOn { get; set; }
         public string FullName => $"{FirstName} {LastName}";
-        public string StudentDisplay => $"{StudentId} | {FirstName} {LastName} | {ClassName} ";
+        public string StudentDisplay => $"{StudentId} | {LastName}, {FirstName} | {ClassName} ";
     }
 }
