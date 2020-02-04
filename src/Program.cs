@@ -7,11 +7,11 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
 {
     class Program
     {
+        static List<Student> studentsList = new List<Student>();
+
         static void Main(string[] args)
         {
             var inputtingStudent = true;
-            var studentsList = new List<Student>();
-            var studentsDictionary = new Dictionary<string, Student>();
 
             while (inputtingStudent)
             {
@@ -21,14 +21,14 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
                 switch (int.Parse(option))
                 {
                     case 1:
-                        InputStudent(studentsDictionary, studentsList);
+                        InputStudent();
                         break;
                     case 2:
-                        DisplayStudents(studentsList);
+                        DisplayStudents();
 
                         break;
                     case 3:
-                        SearchStudents(studentsList);
+                        SearchStudents();
                         break;
                     case 4:
                         inputtingStudent = false;
@@ -37,7 +37,7 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
             }
         }
 
-        private static void DisplayStudents(List<Student> studentsList)
+        private static void DisplayStudents(List<Student> students)
         {
             Console.WriteLine($"Student Id | Name |  Class ");
             studentsList.ForEach(x =>
@@ -46,18 +46,24 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
             });
         }
 
-        private static void SearchStudents(List<Student> studentsList)
+        private static void DisplayStudents() 
+        {
+            DisplayStudents(studentsList);
+        }
+
+
+        private static void SearchStudents()
         {
             Console.WriteLine("Search string:");
             var searchString = Console.ReadLine();
             var students = studentsList.Where(x => x.FullName.Contains(searchString)).ToList();
             if (students.Any())
             {
-                Console.WriteLine($"Student Id | Name |  Class ");
-                students.ForEach(x =>
-                {
-                    Console.WriteLine(x.StudentDisplay);
-                });
+                DisplayStudents(students);
+            }
+            else 
+            {
+                System.Console.WriteLine("No students found which match this criteria.");
             }
         }
 
@@ -70,7 +76,7 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
             Console.WriteLine("4: Exit");
         }
 
-        static void InputStudent(Dictionary<string, Student> studentsDictionary, List<Student> studentsList)
+        static void InputStudent()
         {
             Console.WriteLine("Enter Student Id");
             var studentId = Convert.ToInt32(Console.ReadLine());
@@ -98,8 +104,7 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
             Console.WriteLine($"Student Id | Name |  Class ");
             Console.WriteLine(student.StudentDisplay);
             Console.ReadKey();
-            studentsDictionary.Add(student.FullName, student);
-            studentsList = studentsDictionary.Select(s => s.Value).ToList();
+            studentsList.Add(student);
         }
     }
 }
