@@ -1,14 +1,28 @@
-﻿using System;
+﻿using src;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using src;
+using System.Text.Json;
 
 namespace DaveWriteCode.CodeLou.ExerciseProject
 {
     class Program
     {
-        static List<Student> studentsList = new List<Student>();
+        static string _studentRepositoryPath = $"{AppDomain.CurrentDomain.BaseDirectory}\\students.json";
 
+        static List<Student> studentsList = File.Exists(_studentRepositoryPath) ? Read() : new List<Student>();
+        static void Save()
+        {
+            using (var file = File.CreateText(_studentRepositoryPath))
+            {
+                file.WriteAsync(JsonSerializer.Serialize(studentsList));
+            }
+        }
+        
+        static List<Student> Read() {
+            return  JsonSerializer.Deserialize<List<Student>>(File.ReadAllText(_studentRepositoryPath));
+        }
         static void Main(string[] args)
         {
             var inputtingStudent = true;
@@ -37,12 +51,12 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
             }
         }
 
-        private static void DisplayStudents(IEnumerable<Student> students)
+        private static void DisplayStudents(List<Student> students)
         {
             if (students.Any()) 
             {
                 Console.WriteLine($"Student Id | Name |  Class ");
-                studentsList.ForEach(x =>
+                students.ForEach(x =>
                 {
                     Console.WriteLine(x.StudentDisplay);
                 });
@@ -60,12 +74,11 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
             Console.WriteLine("Search string:");
             var searchString = Console.ReadLine();
             var students = studentsList.Where(x => x.FullName.ToLower().Contains(searchString.ToLower()) || x.ClassName.ToLower().Contains(searchString.ToLower()));
-            DisplayStudents(students);
+            DisplayStudents(students.ToList());
         }
 
         private static void DisplayMenu()
         {
-            Console.Clear();
             Console.WriteLine("Select from the following operations:");
             Console.WriteLine("1: Enter new student");
             Console.WriteLine("2: List all students");
@@ -111,6 +124,7 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
                 }
             } 
             studentsList.Add(student);
+            Save();
         }
     }
 }
