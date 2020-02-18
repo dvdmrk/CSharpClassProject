@@ -59,7 +59,7 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
         {
             Console.WriteLine("Search string:");
             var searchString = Console.ReadLine();
-            var students = studentsList.Where(x => x.FullName.Contains(searchString));
+            var students = studentsList.Where(x => x.FullName.ToLower().Contains(searchString.ToLower()) || x.ClassName.ToLower().Contains(searchString.ToLower()));
             DisplayStudents(students);
         }
 
