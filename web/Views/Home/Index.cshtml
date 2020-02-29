@@ -1,0 +1,40 @@
+﻿@model List<src.Student>;
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="text-center">
+        <h1 class="display-4">Student Display</h1>
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+         {
+
+    <div>
+        @if (Model == null)
+        {
+            <div class="custom-file">
+                <input type="file" onchange="submitForm();" class="custom-file-input" id="file" name="file" required>
+                <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+        }
+        else
+        {
+    <table class="table">
+        <thead>
+        <th><label asp-for="@Model.FirstOrDefault().FullName"></label></th>
+        <th><label asp-for="@Model.FirstOrDefault().ClassName"></label></th>
+        <th><label asp-for="@Model.FirstOrDefault().StartDate"></label></th>
+        </thead>
+        @foreach (var m in Model.Select((value, i) => new { i, value }))
+        {
+            <tr id='@($"row{m.value.StudentId}")'>
+                <td><span name='@($"Student[{m.i}].FullName")'>@m.value.FullName</span></td>
+                <td><span name='@($"Student[{m.i}].ClassName")'>@m.value.ClassName</span></td>
+                <td><span name='@($"Student[{m.i}].StartDate")'>@m.value.StartDate</span></td>
+            </tr>
+        }
+    </table>
+        }
+    </div>
+         }
+    </div>

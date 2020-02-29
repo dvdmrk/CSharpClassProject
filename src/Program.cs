@@ -14,10 +14,7 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
         static List<Student> studentsList = File.Exists(_studentRepositoryPath) ? Read() : new List<Student>();
         static void Save()
         {
-            using (var file = File.CreateText(_studentRepositoryPath))
-            {
-                file.WriteAsync(JsonSerializer.Serialize(studentsList));
-            }
+            File.CreateText(_studentRepositoryPath).Write(JsonSerializer.Serialize(studentsList));
         }
         
         static List<Student> Read() {

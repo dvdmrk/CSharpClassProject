@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+
 namespace src
 {
     public class Student
@@ -10,6 +12,7 @@ namespace src
         public DateTimeOffset StartDate { get; set; }
         public string LastClassCompleted { get; set; }
         public DateTimeOffset LastClassCompletedOn { get; set; }
+        [Display(Name = "Full Name")]
         public string FullName => $"{FirstName} {LastName}";
         public string StudentDisplay => $"{StudentId} | {LastName}, {FirstName} | {ClassName} ";
     }
