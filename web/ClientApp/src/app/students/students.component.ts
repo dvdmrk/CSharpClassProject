@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StudentsComponent implements OnInit {
     editField: string;
+    file: File;
+    onFileAdd(file: File) {
+        this.file = file;
+    }
+
+    onFileRemove() {
+        this.file = null;
+    }
     personList: Array<any> = [
         { id: 1, name: 'Aurelia Vega', age: 30, companyName: 'Deepends', country: 'Spain', city: 'Madrid' },
         { id: 2, name: 'Guerra Cortez', age: 45, companyName: 'Insectus', country: 'USA', city: 'San Francisco' },
