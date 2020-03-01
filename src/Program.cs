@@ -14,14 +14,14 @@ namespace DaveWriteCode.CodeLou.ExerciseProject
         static List<Student> studentsList = File.Exists(_studentRepositoryPath) ? Read() : new List<Student>();
         static void Save()
         {
-            using (var file = File.CreateText(_studentRepositoryPath))
-            {
-                file.WriteAsync(JsonSerializer.Serialize(studentsList));
-            }
+            var serializedStudents = JsonSerializer.Serialize(studentsList);
+            var file = File.CreateText(_studentRepositoryPath);
+            file.Write(serializedStudents);
         }
         
         static List<Student> Read() {
-            return  JsonSerializer.Deserialize<List<Student>>(File.ReadAllText(_studentRepositoryPath));
+            var serializedStudents = File.ReadAllText(_studentRepositoryPath);
+            return  JsonSerializer.Deserialize<List<Student>>(serializedStudents);
         }
         static void Main(string[] args)
         {
