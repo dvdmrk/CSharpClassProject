@@ -28,7 +28,9 @@ import { StudentsComponent } from './students/students.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+        { path: 'fetch-data', component: FetchDataComponent },
+        { path: 'students', component: StudentsComponent }
+
     ])
   ],
   providers: [],
